@@ -1,11 +1,12 @@
 /* @flow */
 
-import React, { Component, PropTypes, } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import _from 'loadash';
+import _ from 'lodash';
 import geocode from '../services/geocode';
 
 

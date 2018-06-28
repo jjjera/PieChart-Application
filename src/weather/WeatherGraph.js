@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   ART,
   Dimensions,
@@ -8,8 +9,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import Morph from 'art/morph/path';
-import * as graph-utils from './graph-utils';
-import Color from '../services/Color';
+import * as graphUtils from './graph-utils';
+import Color from '../services/color';
 
 const {
   Group,
@@ -20,7 +21,7 @@ const {
 const PaddingSize = 20;
 const TickWidth = PaddingSize * 2;
 const AnimationDurationMs = 500;
-const DimensionWindow = Dimensions.get('window');
+const dimensionWindow = Dimensions.get('window');
 
 export default class WeatherGraph extends Component {
   static propTypes = {
@@ -46,7 +47,7 @@ export default class WeatherGraph extends Component {
      this.computeNextState(this.props);
   }
 
-  componentWillReceiveProps(mextProps) {
+  componentWillReceiveProps(nextProps) {
     this.computeNextState(nextProps);
   }
 
@@ -58,7 +59,7 @@ export default class WeatherGraph extends Component {
       xAccessor,
       yAccessor,
     } = nextProps;
-  }
+
 
   const fullPaddingSize = PaddingSize * 2;
   const graphWidth = width - fullPaddingSize;
@@ -108,6 +109,7 @@ export default class WeatherGraph extends Component {
     });
     this.previousGraph = lineGraph;
   }
+}
 
   animate(start) {
     this.animating = requestAnimationFrame((timestamp) => {
@@ -147,7 +149,7 @@ export default class WeatherGraph extends Component {
       x: scaleX,
     } = scale;
 
-    const tickXFormat = scaleX.tickXFormat(null, '%b %d');
+    const tickXFormat = scaleX.tickFormat(null, '%b %d');
 
     return (
       <View style={styles.container}>
@@ -161,7 +163,7 @@ export default class WeatherGraph extends Component {
           </Group>
         </Surface>
         <View key={'ticksX'}>
-          {ticks.map((ticks, index) => {
+          {ticks.map((tick, index) => {
             const tickStyles = {};
             tickStyles.width = TickWidth;
             tickStyles.left = tick.x - (TickWidth / 2);
@@ -175,7 +177,7 @@ export default class WeatherGraph extends Component {
         </View>
 
         <View key={'ticksY'} style={styles.ticksYContainer}>
-          {ticks.map((ticks, index) => {
+          {ticks.map((tick, index) => {
             const value = yAccessor(tick.datum);
             const tickStyles = {};
 
@@ -191,16 +193,16 @@ export default class WeatherGraph extends Component {
             );
           })}
         </View>
-        <View key={ticksYDot} style={styles.ticksYContainer}>
-           {ticks.map((tick, index) => (
-             <View
-               key={index}
-               style={[styles.ticksYDot, {
-                 left: tick.x,
-                 top: tick.y,
-               }]}
-             />
-           ))}
+        <View key={'ticksYDot'} style={styles.ticksYContainer}>
+          {ticks.map((tick, index) => (
+            <View
+              key={index}
+              style={[styles.ticksYDot, {
+                left: tick.x,
+                top: tick.y,
+              }]}
+            />
+          ))}
         </View>
       </View>
     );

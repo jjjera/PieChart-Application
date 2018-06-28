@@ -1,6 +1,7 @@
 /* @flow */
 
-import React, { Component, PropTypes,  } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   Text,
@@ -8,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Header from '../components/Header';
-import Address from './AddressInput';
+import AddressInput from './AddressInput';
 import Color from '../services/color';
 
 
@@ -45,7 +46,7 @@ export default class AddressPage extends Component {
             <Text style = {styles.directions}>Enter Your Address</Text>
             <AddressInput
                onRequest={this.showActivity}
-               onSuccess={onSuccess}
+               onSuccess={this.onSuccess}
                onError={this.showError}
             />
             <ActivityIndicator
